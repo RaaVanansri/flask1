@@ -32,7 +32,7 @@ def subnet(sub):
         del ip
     else:
         if len(ip_l) == 4 : 
-            if int(cidr) < 33 and int(cidr) > 7:
+            if int(cidr) < 33 and int(cidr) > 0:
                 if int(cidr) < 16 :
                     ip_cat = 'A'
                 elif int(cidr) < 24 :
@@ -68,7 +68,7 @@ def subnet(sub):
                     elif int(cidr) >= 24 and int(cidr) < 32:
                         rangenid = [str(x+'.'+str(start_nw_id)),str(x+'.'+str(start_nw_id))]
                     else:
-                        rangenid = [str(x+'.'+str(start_nw_id)),str(x+'.'+str(start_nw_id))]
+                        rangenid = [str(str(start_nw_id)+'.0.0.0'),str(str(start_nw_id)+'.0.0.1')]
 
                     mid_cast = [int(x)+int(y) for x,y in zip(rangenid[0].split('.'),wildcardmask.split('.'))]
                     end_range_host = '.'.join(str(i) if k != 3 else str(i-1) for i,k in zip(mid_cast,range(len(mid_cast))))
