@@ -38,7 +38,7 @@ def subnet(sub,cidr):
         start_nw_id = 0
         host_start_ip = 0
         x = '.'.join(ipdict.get("IP Address").split('.')[i] for i in range(ipdict.get("editableoctet")))
-        output += (f'\nIP Address:{ipdict.get("IP Address")}\nCIDR:{ipdict.get("CIDR")}\n[netid]\nSubnetmask : {ipdict.get("subnetmask")} \nPossilble networks : {ipdict.get("MSB")} \nUsable Host for each subnet : {ipdict.get("uhost")} \nBinary Bits : {ipdict.get("binary_bits")}\nWildcard mask : {ipdict.get("wildcardmask")}\nClass:{ipdict.get("ip_cat")}-{ipdict.get("ip_class")}\nIP Type:{ip_type}')
+        output = (f'\nIP Address:{ipdict.get("IP Address")}\nCIDR:{ipdict.get("CIDR")}\n[netid]\nSubnetmask : {ipdict.get("subnetmask")} \nPossilble networks : {ipdict.get("MSB")} \nUsable Host for each subnet : {ipdict.get("uhost")} \nBinary Bits : {ipdict.get("binary_bits")}\nWildcard mask : {ipdict.get("wildcardmask")}\nClass:{ipdict.get("ip_cat")}-{ipdict.get("ip_class")}\nIP Type:{ip_type}')
         output += f'\nBinary ID:{bid}\nInteger ID:{intid}\nHex ID:{hex(intid)}\nin-addr.arpa:{".".join(sub.split(".")[i] for i in range(3,-1,-1))}.in-addr.arpa'
         output += ('[Begin]\n-----------------------------------------------------------------\n|   Network ID  |          Host IP range        |    Broadcast  |\n-----------------------------------------------------------------')
         for y in range(ipdict.get("MSB")):

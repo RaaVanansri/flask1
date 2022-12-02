@@ -3,6 +3,7 @@
     <title>IP subnet calculator</title>
 </head>
 <body>
+    <link rel="stylesheet" href='/static/style.css' />
     <div name="textdiv" id="textd">
         <form action="/" method="POST">
             <label>Enter IP/CIDR for.ex:(0.0.0.0/0):</label>
@@ -14,17 +15,17 @@
         <p style="visibility: {{ sv }};">{{ serious }}</p>
     </div>
     <div class="col-sm-10" style="padding-top: 8px">
-        <table style="visibility: {{ v }}; ">
+        <table class="cinfoT">
             <tbody>
                 {% for i in output %}
                 <tr><td>{{ i }}</td></tr>  
                 {% endfor %}
             </tbody>
         </table>
-        <table style="visibility: {{ v }}; color: #000;">
+        <table class="cinfoT">
             <tbody>
                 {% for i in netloop %}
-                    <tr><td>{{ i }}</td></tr>  
+                    <tr><td class="cinfoHd">{{ i }}</td></tr>  
                 {% endfor %}
             </tbody>
         </table>
