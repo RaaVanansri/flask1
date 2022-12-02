@@ -1,5 +1,21 @@
 def subnet(sub,cidr):
     output = ''
+    count = 0
+    ip = sub.split('.')
+    if len(ip) == 4 and 7 < int(cidr) <= 32:
+        for i in range(0,4):
+            if -1 < int(ip[i]) < 256:
+                count += 1
+            if count == 4:
+                del count
+                break
+        else:
+            output += ("Entered IP or CIDR is in wrong fromat please enter again")
+            return output
+    else:
+        output += ("Entered IP or CIDR is in wrong fromat please enter again")
+        return output
+
     if sub.split('.')[0] == '10' or sub.split('.')[0] == '172' or sub.split('.')[0] == '192':
         ip_type = 'Private'
     else:
