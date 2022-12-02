@@ -1,21 +1,6 @@
 def subnet(sub,cidr):
     output = ''
-    count = 0
-    ip = sub.split('.')
-    if len(ip) == 4 and 7 < int(cidr) <= 32:
-        for i in range(0,4):
-            if -1 < int(ip[i]) < 256:
-                count += 1
-            if count == 4:
-                del count
-                break
-        else:
-            output += ("Entered IP or CIDR is in wrong fromat please enter again")
-            return output
-    else:
-        output += ("Entered IP or CIDR is in wrong fromat please enter again")
-        return output
-
+    
     if sub.split('.')[0] == '10' or sub.split('.')[0] == '172' or sub.split('.')[0] == '192':
         ip_type = 'Private'
     else:
@@ -55,7 +40,7 @@ def subnet(sub,cidr):
         x = '.'.join(ipdict.get("IP Address").split('.')[i] for i in range(ipdict.get("editableoctet")))
         output += (f'\nIP Address:{ipdict.get("IP Address")}\nCIDR:{ipdict.get("CIDR")}\n[netid]\nSubnetmask : {ipdict.get("subnetmask")} \nPossilble networks : {ipdict.get("MSB")} \nUsable Host for each subnet : {ipdict.get("uhost")} \nBinary Bits : {ipdict.get("binary_bits")}\nWildcard mask : {ipdict.get("wildcardmask")}\nClass:{ipdict.get("ip_cat")}-{ipdict.get("ip_class")}\nIP Type:{ip_type}')
         output += f'\nBinary ID:{bid}\nInteger ID:{intid}\nHex ID:{hex(intid)}\nin-addr.arpa:{".".join(sub.split(".")[i] for i in range(3,-1,-1))}.in-addr.arpa'
-        output += ('\n-----------------------------------------------------------------\n|   Network ID  |          Host IP range        |    Broadcast  |\n-----------------------------------------------------------------')
+        output += ('[Begin]\n-----------------------------------------------------------------\n|   Network ID  |          Host IP range        |    Broadcast  |\n-----------------------------------------------------------------')
         for y in range(ipdict.get("MSB")):
             if int(ipdict.get("CIDR")) > 7 and int(ipdict.get("CIDR")) < 16 :
                 rangenid = [str(x+'.'+str(start_nw_id)+'.'+'0.'+str(host_start_ip)),str(x+'.'+str(start_nw_id)+'.'+'0.'+str(host_start_ip+1))]
