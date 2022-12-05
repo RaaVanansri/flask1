@@ -1,6 +1,8 @@
 def subnet(sub,cidr):
-    output = ''
-    
+    networkid = ['Network ID']
+    netrange = ['Usable Host IP Range']
+    broadcastip = ['Broardcast IP']
+
     if sub.split('.')[0] == '10' or sub.split('.')[0] == '172' or sub.split('.')[0] == '192':
         ip_type = 'Private'
     else:
@@ -38,9 +40,9 @@ def subnet(sub,cidr):
         start_nw_id = 0
         host_start_ip = 0
         x = '.'.join(ipdict.get("IP Address").split('.')[i] for i in range(ipdict.get("editableoctet")))
-        output = (f'\nIP Address:{ipdict.get("IP Address")}\nCIDR:{ipdict.get("CIDR")}\n[netid]\nSubnetmask : {ipdict.get("subnetmask")} \nPossilble networks : {ipdict.get("MSB")} \nUsable Host for each subnet : {ipdict.get("uhost")} \nBinary Bits : {ipdict.get("binary_bits")}\nWildcard mask : {ipdict.get("wildcardmask")}\nClass:{ipdict.get("ip_cat")}-{ipdict.get("ip_class")}\nIP Type:{ip_type}')
+        output = (f'IP Address:{ipdict.get("IP Address")}\nCIDR:{ipdict.get("CIDR")}\n[netid]\nSubnetmask : {ipdict.get("subnetmask")} \nPossilble networks : {ipdict.get("MSB")} \nUsable Host for each subnet : {ipdict.get("uhost")} \nBinary Bits : {ipdict.get("binary_bits")}\nWildcard mask : {ipdict.get("wildcardmask")}\nClass:{ipdict.get("ip_cat")}-{ipdict.get("ip_class")}\nIP Type:{ip_type}')
         output += f'\nBinary ID:{bid}\nInteger ID:{intid}\nHex ID:{hex(intid)}\nin-addr.arpa:{".".join(sub.split(".")[i] for i in range(3,-1,-1))}.in-addr.arpa'
-        output += ('[Begin]\n-----------------------------------------------------------------\n|   Network ID  |          Host IP range        |    Broadcast  |\n-----------------------------------------------------------------')
+        #output += ('[Begin]\n-----------------------------------------------------------------\n|   Network ID  |          Host IP range        |    Broadcast  |\n-----------------------------------------------------------------')
         for y in range(ipdict.get("MSB")):
             if int(ipdict.get("CIDR")) > 7 and int(ipdict.get("CIDR")) < 16 :
                 rangenid = [str(x+'.'+str(start_nw_id)+'.'+'0.'+str(host_start_ip)),str(x+'.'+str(start_nw_id)+'.'+'0.'+str(host_start_ip+1))]
@@ -54,10 +56,17 @@ def subnet(sub,cidr):
             end_range_host = '.'.join(str(i) if k != 3 else str(i-1) for i,k in zip(mid_cast,range(len(mid_cast))))
             start_nw_id += int(256/ipdict.get("MSB"))
             bb_cast = '.'.join(str(i) for i in mid_cast)
-            output += (f'\n|{rangenid[0].center(15)}|{rangenid[1].center(15)}-{end_range_host.center(15)}|{bb_cast.center(15)}|')
-            if int(rangenid[1].split('.')[ipdict.get("editableoctet")]) <= int(sub.split('.')[ipdict.get("editableoctet")]) <= int(end_range_host.split('.')[ipdict.get("editableoctet")]) :
-                repplace = f'Network ID:{rangenid[0].center(15)}\nHost Range:{rangenid[1].center(15)}-{end_range_host.center(15)}\nBrocast Address:{bb_cast.center(15)}'
+            #output += (f'\n|{rangenid[0]}|{rangenid[1]}-{end_range_host}|{bb_cast}|')
+            networkid.append(rangenid[0])
+            netrange.append(f'{rangenid[1]}-{end_range_host}')
+            broadcastip.append(bb_cast)
+            if end_range_host == '122.0.0.254':
+                pass
+            if sub == rangenid[0] or sub == end_range_host or sub == rangenid[1] or sub == bb_cast:
+                repplace = (f'Network ID:{rangenid[0]}\nHost Range:N/A\nBroadcast Address:{bb_cast}')
                 output = output.replace('[netid]',repplace)
-        output += ('\n-----------------------------------------------------------------')
+            elif int(rangenid[1].split('.')[ipdict.get("editableoctet")]) <= int(sub.split('.')[ipdict.get("editableoctet")]) <= int(end_range_host.split('.')[ipdict.get("editableoctet")]) :
+                repplace = f'Network ID:{rangenid[0]}\nHost Range:{rangenid[1]}-{end_range_host}\nBroadcast Address:{bb_cast}'
+                output = output.replace('[netid]',repplace)
 
-    return output
+    return [output,networkid,netrange,broadcastip]
